@@ -1,8 +1,15 @@
 # Spring
 spring:
+  application:
+    name: template
+  # spring boot admin
+  boot:
+    admin:
+      client:
+        url: http://localhost:8769
   profiles:
     active: dev
-  #热部署生效
+  # 热部署生效
   devtools:
     restart:
       enabled: true
@@ -13,8 +20,19 @@ spring:
     username: root
     password: root@xleon.site
 
+
 # JWT
 jwt:
   secret: R3F5k2Qe2LGNQnoU1/edoeK4Rky04iT777nntorlsMg=
   # 过期时间分钟
   expiry: 30
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
