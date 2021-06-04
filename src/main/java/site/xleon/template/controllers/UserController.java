@@ -1,10 +1,13 @@
 package site.xleon.template.controllers;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 import site.xleon.template.core.JWT;
 import site.xleon.template.core.MyException;
 import site.xleon.template.core.Result;
+import site.xleon.template.mapper.UserMapper;
 import site.xleon.template.models.User;
 
 import javax.validation.Valid;
@@ -16,34 +19,41 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("/user")
+@AllArgsConstructor
 public class UserController extends BaseController {
-    @Data
-    private static class LoginParams {
-        @NotBlank
-        private String account;
-        @NotBlank
-        private String password;
+  private UserMapper userMapper;
+
+  @PostMapping("/login")
+  public Result<User> login(@RequestBody @Valid LoginParams params) throws MyException {
+    QueryWrapper<User> query = new QueryWrapper<>();
+    query.select("id")
+      .eq("account", params.getAccount())
+      .eq("password", params.getPassword());
+    User user = userMapper.selectOne(query);
+    if (user == null) {
+      throw new MyException("account or password invalid");
     }
+    user.setToken(new JWT().createTokenByUser(user));
+    return Result.success(user);
+  }
 
-    @PostMapping("/login")
-    public Result<User> login(@RequestBody @Valid LoginParams params) {
-        User user = new User();
-        user.setAccount(params.getAccount());
-        user.setPassword(params.getPassword());
+  @GetMapping("/{id}")
+  public Result<User> getUserDetail(@PathVariable String id) throws MyException {
 
-        user.setId("1");
-        user.setToken(new JWT().createTokenByUser(user));
-        return Result.success(user);
-    }
+    User user = new User();
+    user.setId(Integer.getInteger(id));
+    user.setMobile("1391234");
 
-    @GetMapping("/{id}")
-    public Result<User> getUserDetail(@PathVariable String id) throws MyException {
-        User user = new User();
-        user.setId(id);
-        user.setMobile("1391234");
+    System.out.println("action id: " + this.getUserId());
+    return Result.success(user);
+  }
 
-        System.out.println("action id: " + this.getUserId());
-        return Result.success(user);
-    }
+  @Data
+  private static class LoginParams {
+    @NotBlank
+    private String account;
+    @NotBlank
+    private String password;
+  }
 
 }

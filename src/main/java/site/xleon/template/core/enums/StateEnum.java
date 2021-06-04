@@ -1,18 +1,17 @@
-package site.xleon.template.core;
+package site.xleon.template.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * @author leon xu
- * @date 2021/5/30 5:39 下午
+ * @date 2021/6/2 1:31 下午
  */
 @AllArgsConstructor
-public enum ResultCodeEnum {
+public enum StateEnum {
   // defines
-  SUCCESS(1, " SUCCESS"),
-  WARN(0, "WARN"),
-  ERROR(-1, "ERROR");
+  DISABLE(0, "DISABLE"),
+  ENABLE(1, "ENABLE");
 
   @Getter
   private final Integer value;

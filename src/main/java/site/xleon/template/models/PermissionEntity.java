@@ -8,19 +8,19 @@ import lombok.Data;
 
 /**
  * @author leon xu
- * @date 2021/5/29 11:01 下午
+ * @date 2021/6/2 11:08 上午
  */
 @Data
-@TableName("user")
-public class User extends BaseEntity {
+@TableName("permission")
+public class PermissionEntity extends BaseEntity {
   @TableId(value = "id", type = IdType.AUTO)
   private Integer id;
-  private String account;
-  private String password;
-  private String mobile;
-  private Integer roleId;
+  private String title;
+  private String detail;
+  private Integer parentId;
+  private Boolean isMenu;
+  private Integer seq;
+  private String api;
+  private String apiMethod;
   private Integer state;
-
-  @TableField(exist = false)
-  private String token;
 }

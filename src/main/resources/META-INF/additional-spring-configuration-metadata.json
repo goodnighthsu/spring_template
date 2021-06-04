@@ -4,5 +4,10 @@
       "name": "jwt.secret",
       "type": "java.lang.String",
       "description": "jwt secret."
+    },
+    {
+      "name": "jwt.expiry",
+      "type": "java.lang.String",
+      "description": "jwt expiry."
     }
   ] }

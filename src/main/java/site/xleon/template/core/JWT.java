@@ -7,10 +7,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import site.xleon.template.models.User;
 
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author leon xu
@@ -18,36 +22,65 @@ import javax.crypto.SecretKey;
  */
 @Component
 public class JWT {
-    private static String secretString;
+  /**
+   * secret string
+   */
+  private static String secretString;
+  /**
+   * expiry minutes
+   */
+  private static Integer expiry;
 
-    @Value("${jwt.secret}")
-    private void setSecretString(String secret) {
-      JWT.secretString = secret;
+  public static String getUserId(HttpServletRequest request) throws MyException {
+    String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+    if (token == null || token.isEmpty()) {
+      throw new MyException("token can not be null");
     }
 
-    public String createTokenByUser(User user) {
-        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(JWT.secretString));
-        return Jwts.builder()
-          .setAudience(user.getId())
-          .signWith(key).compact();
-    }
+    // remove Bearer from token
+    token = token.substring(7);
 
-    public static String getUserId(String token) throws MyException {
-      try {
-
-        Jws<Claims> claims = Jwts.parserBuilder()
-          .setSigningKey(JWT.secretString)
-          .build().parseClaimsJws(token);
-        String userId = claims.getBody().getAudience();
-        if (userId == null ){
-          throw new MyException("Invalid token");
-        }
-
-        return userId;
-      } catch (JwtException e) {
-        throw new MyException(e.getMessage());
+    try {
+      Jws<Claims> claims = Jwts.parserBuilder()
+        .setSigningKey(JWT.secretString)
+        .build().parseClaimsJws(token);
+      String userId = claims.getBody().getAudience();
+      if (userId == null) {
+        throw new MyException("Invalid token");
       }
 
-
+      return userId;
+    } catch (JwtException e) {
+      throw new MyException("Invalid token");
     }
+  }
+
+  @Value("${jwt.secret}")
+  private void setSecretString(String secret) {
+    JWT.secretString = secret;
+  }
+
+  @Value("${jwt.expiry}")
+  private void setExpiry(Integer expiry) {
+    JWT.expiry = expiry;
+  }
+
+
+  /**
+   * create token
+   * @param user 用户
+   * @return token
+   */
+  public String createTokenByUser(User user) {
+    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(JWT.secretString));
+    long expiration = System.currentTimeMillis() + JWT.expiry * 60 * 1000;
+
+    return Jwts.builder()
+      .setIssuer("template.xleon.site")
+      .setId(UUID.randomUUID().toString())
+      .setAudience(user.getId().toString())
+      .setExpiration(new Date(expiration))
+      .setIssuedAt(new Date())
+      .signWith(key).compact();
+  }
 }

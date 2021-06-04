@@ -1,5 +1,7 @@
 package site.xleon.template.controllers;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import site.xleon.template.core.JWT;
 import site.xleon.template.core.MyException;
@@ -20,8 +22,7 @@ public class BaseController {
   }
 
   public String getUserId() throws MyException {
-    String token = request.getHeader("token");
-    return JWT.getUserId(token);
+    return JWT.getUserId(request);
   }
 
 }

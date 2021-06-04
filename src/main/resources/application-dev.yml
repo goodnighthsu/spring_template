@@ -1,7 +1,5 @@
 # Spring
 spring:
-  profiles:
-    active: dev
   #热部署生效
   devtools:
     restart:
@@ -17,4 +15,4 @@ spring:
 jwt:
   secret: R3F5k2Qe2LGNQnoU1/edoeK4Rky04iT777nntorlsMg=
   # 过期时间分钟
-  expiry: 30
+  expiry: 3000

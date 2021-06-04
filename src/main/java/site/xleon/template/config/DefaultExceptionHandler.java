@@ -96,6 +96,7 @@ public class DefaultExceptionHandler extends BasicErrorController {
     @ExceptionHandler
     public Result defaultException(HttpServletRequest request, Exception exception) {
         System.out.println("default exception: ");
+        System.out.println(exception);
         if (
                 exception instanceof MethodArgumentTypeMismatchException ||
                 exception instanceof MissingServletRequestParameterException ||
