@@ -44,7 +44,6 @@ public class UserController extends BaseController {
     user.setId(Integer.getInteger(id));
     user.setMobile("1391234");
 
-    System.out.println("action id: " + this.getUserId());
     return Result.success(user);
   }
 

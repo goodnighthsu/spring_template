@@ -91,7 +91,7 @@ public class DefaultExceptionHandler extends BasicErrorController {
     logger.warn("request url: " + request.getRequestURI());
     if (exception instanceof MethodArgumentTypeMismatchException ||
         exception instanceof MissingServletRequestParameterException ||
-//        exception instanceof HttpRequestMethodNotSupportedException ||
+        exception instanceof HttpRequestMethodNotSupportedException ||
         exception instanceof HttpMessageConversionException ||
         exception instanceof MyException
     ) {
@@ -108,7 +108,7 @@ public class DefaultExceptionHandler extends BasicErrorController {
       return Result.fail(fieldError.getField() + ": " + fieldError.getDefaultMessage());
     }
 
-    logger.error("request url: "  + request.getRequestURI());
+    logger.error("request url: " + request.getRequestURI());
     logger.error(exception.getMessage(), exception);
     return Result.fail(ResultCodeEnum.ERROR, exception.getMessage(), exception);
   }

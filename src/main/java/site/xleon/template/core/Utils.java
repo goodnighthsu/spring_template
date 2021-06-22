@@ -1,5 +1,7 @@
 package site.xleon.template.core;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.util.DigestUtils;
 
@@ -83,6 +85,33 @@ public class Utils {
         }
 
         return Optional.ofNullable(value);
+    }
+
+  /**
+   * 对象转json string
+   *
+   * @param data 解析对象
+   * @return string
+   */
+  public static Optional<String> jsonString(Object data) {
+    ObjectMapper mapper = new ObjectMapper();
+    String jsonString = null;
+    try {
+      jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data);
+    } catch (Exception exception) {
+      //
+    }
+
+    return Optional.ofNullable(jsonString);
+  }
+
+    static final Integer DEFAULT_PAGE_SIZE = 50;
+    public static <T> Page<T> page(Integer aPage, Integer aPageSize) {
+      Integer page = Optional.ofNullable(aPage).orElse(1);
+      Integer pageSize = Optional.ofNullable(aPageSize).orElse(DEFAULT_PAGE_SIZE);
+      Page<T> paging = new Page<>((long)page, (long)pageSize);
+      paging.setMaxLimit(100L);
+      return paging;
     }
 
     /**
@@ -349,5 +378,4 @@ public class Utils {
             return buf.toString();
         }
     }
-
 }

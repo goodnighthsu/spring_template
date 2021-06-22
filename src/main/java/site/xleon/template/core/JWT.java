@@ -31,7 +31,7 @@ public class JWT {
    */
   private static Integer expiry;
 
-  public static String getUserId(HttpServletRequest request) throws MyException {
+  public static Integer getUserId(HttpServletRequest request) throws MyException {
     String token = request.getHeader(HttpHeaders.AUTHORIZATION);
     if (token == null || token.isEmpty()) {
       throw new MyException("token can not be null");
@@ -49,7 +49,7 @@ public class JWT {
         throw new MyException("Invalid token");
       }
 
-      return userId;
+      return Integer.parseInt(userId);
     } catch (JwtException e) {
       throw new MyException("Invalid token");
     }

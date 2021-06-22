@@ -21,7 +21,7 @@ public class BaseController {
     this.request = request;
   }
 
-  public String getUserId() throws MyException {
+  public Integer getUserId() throws MyException {
     return JWT.getUserId(request);
   }
 

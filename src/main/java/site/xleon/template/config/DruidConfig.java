@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * ali druid
  * @author leon xu
  * @date 2021/6/4 2:00 下午
  */
@@ -33,22 +34,24 @@ public class DruidConfig {
 
   /**
    * sql防火墙过滤器配置
-   * @param wallConfig
-   * @return
+   * @param wallConfig cofig
+   * @return wall filter
    */
   @Bean
   public WallFilter wallFilter (WallConfig wallConfig) {
 
     WallFilter wallFilter = new WallFilter();
     wallFilter.setConfig(wallConfig);
-    wallFilter.setLogViolation(true);//对被认为是攻击的SQL进行LOG.error输出
-    wallFilter.setThrowException(false);//对被认为是攻击的SQL抛出SQLException
+    // 对被认为是攻击的SQL进行LOG.error输出
+    wallFilter.setLogViolation(true);
+    // 对被认为是攻击的SQL抛出SQLException
+    wallFilter.setThrowException(false);
     return wallFilter;
   }
 
   /**
    * sql防火墙配置
-   * @return
+   * @return wall config
    */
   @Bean
   public WallConfig wallConfig () {

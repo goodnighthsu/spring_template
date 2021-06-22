@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author leon xu
  * 认证拦截
+ *
+ * @author leon xu
  * @date 2021/5/30 8:04 下午
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
@@ -25,7 +26,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
       return true;
     }
 
-    String userId = JWT.getUserId(request);
+    // token 校验
+    JWT.getUserId(request);
     return true;
   }
 }
