@@ -191,7 +191,7 @@
     </root>
   </springProfile>
   <springProfile name="test,prod">
-    <root level="TRACE">
+    <root level="ERROR">
       <appender-ref ref="ERROR_FILE"/>
       <appender-ref ref="FATAL_FILE"/>
     </root>

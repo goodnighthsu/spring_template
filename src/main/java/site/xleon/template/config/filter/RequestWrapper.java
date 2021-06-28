@@ -58,12 +58,14 @@ public class RequestWrapper extends HttpServletRequestWrapper {
   private String inputStream2String(InputStream inputStream) throws IOException {
     StringBuilder sb = new StringBuilder();
 
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()))) {
+    InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.defaultCharset());
+    try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
       String line;
       while ((line = reader.readLine()) != null) {
         sb.append(line);
       }
     }
+
 
     return sb.toString();
   }

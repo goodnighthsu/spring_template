@@ -22,7 +22,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LogInterceptor(logMapper))
       .addPathPatterns("/**")
-      .excludePathPatterns("/log/**");
+      .excludePathPatterns("/log/**", "/error");
 
     registry.addInterceptor(new AuthenticationInterceptor())
       .addPathPatterns("/**")

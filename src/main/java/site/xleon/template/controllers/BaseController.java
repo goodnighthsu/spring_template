@@ -1,7 +1,5 @@
 package site.xleon.template.controllers;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import site.xleon.template.core.JWT;
 import site.xleon.template.core.MyException;
