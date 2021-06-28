@@ -1,13 +1,8 @@
 # Spring
 spring:
-  #热部署生效
-  devtools:
-    restart:
-      enabled: true
-
   # mysql
   datasource:
-    url: jdbc:mysql://localhost:33061/template
+    url: jdbc:mysql://mysql:3306/template
     username: root
     password: root@xleon.site
 
@@ -16,7 +11,3 @@ jwt:
   secret: R3F5k2Qe2LGNQnoU1/edoeK4Rky04iT777nntorlsMg=
   # 过期时间分钟
   expiry: 3000
-
-# port
-server:
-  port: 8090

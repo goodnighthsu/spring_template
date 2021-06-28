@@ -3,10 +3,10 @@ spring:
   application:
     name: template
   # spring boot admin
-  boot:
-    admin:
-      client:
-        url: http://localhost:8769
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8769
   profiles:
     active: dev
   # 热部署生效
@@ -16,7 +16,7 @@ spring:
 
   # mysql
   datasource:
-    url: jdbc:mysql://localhost:33061/template
+    url: jdbc:mysql://mysql:3306/template
     username: root
     password: root@xleon.site
 
@@ -32,11 +32,11 @@ jwt:
   expiry: 30
 
 # actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    health:
+#      show-details: always
